@@ -1,0 +1,36 @@
+const max=1000;
+      inf=1000000000;
+
+var i,j,k,n,src,dst:longint;
+    r,a,b,s,e:array[1..max]of longint;
+    {r - минимальное время достижения пункта i}
+    {a, b, s, e - начало, конец, время начала, время конца перелета}
+
+procedure relax(i,j,s,e:longint); {релаксация}
+begin
+  if r[i]<=s then
+    if e<r[j] then
+      r[j]:=e;
+end;
+
+begin
+  assign(input,'input.txt');
+  reset(input);
+  assign(output,'output.txt');
+  rewrite(output);
+
+  read(n,src,dst,k);
+  for i:=1 to k do
+    read(a[i],s[i],b[i],e[i]);
+  for i:=1 to n do
+    r[i]:=inf;
+  r[src]:=0;
+  for i:=1 to n+k do
+    for j:=1 to k do
+      relax(a[j],b[j],s[j],e[j]);
+
+  write(r[dst]);
+
+  close(input);
+  close(output);
+end.
